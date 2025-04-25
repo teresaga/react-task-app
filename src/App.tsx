@@ -1,10 +1,13 @@
 import React from 'react';
 import './App.css';
+import { Navbar } from './layouts/Navbar/Navbar';
+import { StartNow } from './layouts/HomePage/StartNow';
 
 function App() {
   return (
-    <div className="App">
-      <h1>Hello World!</h1>
+    <div>
+      <Navbar/>
+      <StartNow/>
     </div>
   );
 }
