@@ -28,9 +28,9 @@ export const Navbar = () => {
               </NavLink>
             </li>
             <li className='nav-item m-1'>
-              <a type='button' className='btn btn-dark w-100' href='#'>
+              <NavLink type='button' className='btn btn-dark w-100' to='/register'>
                 Regístrate
-              </a>
+              </NavLink>
             </li>
           </ul>
         </div>

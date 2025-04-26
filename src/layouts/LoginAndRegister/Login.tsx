@@ -67,9 +67,7 @@ export const Login = () => {
                 <div className='mt-3 text-center'>
                 <p>
                     <span>¿No tienes cuenta? </span>
-                    <Link to='/register' className='text-decoration-none'>
-                    Regístrate aquí
-                    </Link>
+                    <Link to='/register' className='text-decoration-none'> Regístrate aquí </Link>
                 </p>
                 </div>
             </div>
