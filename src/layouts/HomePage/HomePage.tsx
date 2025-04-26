@@ -1,7 +1,7 @@
 export const HomePage = () => {
   return (
     <div
-      className="header flex-grow-1 d-flex justify-content-center align-items-center"
+      className="home-background"
       title="Foto de Kier in Sight Archives en unsplash.com"
     >
       <div

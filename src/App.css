@@ -7,11 +7,15 @@ html, body {
   margin: 0;
 }
 
-.header {
-  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
-    url("./assets/img/img-papers.jpg");
+.home-background {
+  background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("./assets/img/img-papers.jpg");
   opacity: var(--mainOpacity);
-  height: 25em !important;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 
 .dark-overlay {
