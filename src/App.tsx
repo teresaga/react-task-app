@@ -1,15 +1,15 @@
 import React from 'react';
 import './App.css';
-import { Navbar } from './layouts/Navbar/Navbar';
-import { StartNow } from './layouts/HomePage/StartNow';
+import { Navbar } from './layouts/NavbarAndFooter/Navbar';
+import { HomePage } from './layouts/HomePage/HomePage';
+import { Footer } from './layouts/NavbarAndFooter/Footer';
 
-function App() {
+export const App = () => {
   return (
-    <div>
+    <div className="d-flex flex-column min-vh-100">
       <Navbar/>
-      <StartNow/>
+      <HomePage/>
+      <Footer/>
     </div>
   );
 }
-
-export default App;
