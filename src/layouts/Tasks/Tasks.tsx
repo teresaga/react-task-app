@@ -14,6 +14,17 @@ export const Tasks = () => {
   ]);  
   const [isSortedByCompleted, setIsSortedByCompleted] = useState(false); 
 
+  const handleToggleComplete = (taskId: number) => {
+    // Aquí es donde cambias el estado de la tarea
+    setTasks(prevTasks =>
+      prevTasks.map(task =>
+        task.id === taskId
+          ? { ...task, is_done: !task.is_done } // Cambia el estado de completada
+          : task
+      )
+    );
+  };
+
   return (
     <div className='container mt-4 d-flex flex-column flex-grow-1'>
         <div className="card shadow-sm mb-3">
@@ -47,12 +58,13 @@ export const Tasks = () => {
                                 onClick={() => setIsSortedByCompleted(!isSortedByCompleted)}
                             >
                                 <span className="d-flex justify-content-between">
-                                    <span>Completada </span> 
+                                    <span>Estado </span> 
                                     <i className={`text-primary mx-2 fas ${isSortedByCompleted ? 'fa-arrow-circle-up' : 'fa-arrow-circle-down'}`}></i>
                                 </span>
                             </th>
-                            <th>Fecha de inicio</th>
-                            <th>Fecha de finalización</th>
+                            <th>Fecha Inicio</th>
+                            <th>Fecha límite</th>
+                            <th className="w-6">Cambiar estado </th>
                             <th>Acciones</th>
                         </tr>
                         </thead>
@@ -61,7 +73,9 @@ export const Tasks = () => {
                             <tr key={task.id}>
                                 <td>{index + 1}</td>
                                 <td>{task.title}</td>
-                                <td>{task.description}</td>
+                                <td className="description-cell">
+                                    {task.description}
+                                </td>
                                 <td>
                                     {task.is_done ? ( <span className="badge bg-success">Completada</span>) : (
                                         <span className="badge bg-warning">Pendiente</span>
@@ -70,14 +84,28 @@ export const Tasks = () => {
                                 </td>
                                 <td>{task.start_date.toLocaleDateString()}</td>
                                 <td>{task.end_date.toLocaleDateString()}</td>
+                                <td>
+                                    {!task.is_done ? (
+                                        <button className="btn btn-success badge p-2 mx-1" data-toggle="tooltip" data-placement="top" title="Marcar Completa">
+                                            <i className='fas fa-check mx-1'></i>
+                                        </button>
+                                    ): (
+                                        <button className="btn btn-outline-warning text-dark badge p-2 mx-1" data-toggle="tooltip" data-placement="top" title="Marcar Pendiente">
+                                            <i className='fas fa-undo mx-1'></i>
+                                        </button> 
+                                    )}
+                                </td>
                                 <td className="d-flex flex-row">
-                                    <button className="btn btn-primary badge p-2 mx-1">
+                                    <button className="btn btn-info badge p-2 mx-1" data-toggle="tooltip" data-placement="top" title="Más Información">
+                                        <i className='fas fa-eye mx-1'></i>
+                                    </button>
+                                    <button className="btn btn-primary badge p-2 mx-1" data-toggle="tooltip" data-placement="top" title="Editar Tarea">
                                         <i className='fas fa-pencil mx-1'></i>
                                         <span>Editar</span>
                                     </button>
-                                    <button className="btn btn-danger badge p-2 mx-1">
+                                    <button className="btn btn-danger badge p-2 mx-1" data-toggle="tooltip" data-placement="top" title="Eliminar Tarea">
                                         <i className='fas fa-ban mx-1'></i>
-                                        <span>Editar</span>
+                                        <span>Eliminar</span>
                                     </button>
                                 </td>
                             </tr>
