@@ -35,11 +35,11 @@ export const Tasks = () => {
                     <div className="d-flex flex-row flex-grow-1">
                         <input
                         type="text"
-                        className="form-control form-control-sm me-2"
+                        className="form-control me-2"
                         placeholder="Buscar por título o descripción"
                         />
                         {/* Botón para agregar tarea */}
-                        <button className="btn btn-success btn-sm" onClick={() => alert('Agregar nueva tarea')}>
+                        <button className="btn btn-success col-lg-2 col-md-2 col-4" onClick={() => alert('Agregar nueva tarea')}>
                             Agregar tarea
                         </button>
                     </div>
