@@ -6,6 +6,7 @@ import { Footer } from './layouts/NavbarAndFooter/Footer';
 import { Login } from './layouts/LoginAndRegister/Login';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import { Register } from './layouts/LoginAndRegister/Register';
+import { Tasks } from './layouts/Tasks/Tasks';
 
 export const App = () => {
   const location = useLocation();
@@ -32,6 +33,10 @@ export const App = () => {
 
           <Route path='/register'>
             <Register/>
+          </Route>
+
+          <Route path='/tasks'>
+            <Tasks/>
           </Route>
 
         </Switch>

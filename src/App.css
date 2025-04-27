@@ -30,3 +30,28 @@ html, body {
 footer {
   margin-top: auto; /* Hace que el footer siempre se quede al final */
 }
+
+.btn-custom {
+  border: none;
+  cursor: pointer;
+}
+
+.table-scroll {
+  max-height: 600px;
+  overflow-y: auto;
+  font-size: 1rem;
+}
+
+@media (max-width: 768px) {
+  .table-scroll {
+    max-height: 400px;
+    font-size: 0.875rem;
+  }
+}
+
+@media (max-width: 576px) {
+  .table-scroll {
+    max-height: 400px;
+    font-size: 0.8rem;
+  }
+}
