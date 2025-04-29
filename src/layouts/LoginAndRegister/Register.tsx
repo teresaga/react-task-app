@@ -74,6 +74,7 @@ export const Register = () => {
                 placeholder="Ingresa tu correo electrónico"
                 value={formData.email}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -94,6 +95,7 @@ export const Register = () => {
                 placeholder="Ingresar contraseña"
                 value={formData.password}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
@@ -114,6 +116,7 @@ export const Register = () => {
                 placeholder="Confirmar contraseña"
                 value={formData.confirmPassword}
                 onChange={handleChange}
+                required
               />
             </div>
           </div>
