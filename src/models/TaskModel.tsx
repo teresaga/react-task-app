@@ -1,8 +1,8 @@
 class TaskModel {
-    id: number;
+    id?: number;
     title: string;
     description: string;
-    isDone: boolean;
+    isDone?: boolean;
     startDate: string;
     endDate: string;
 

@@ -7,6 +7,7 @@ import { Login } from './layouts/LoginAndRegister/Login';
 import { Switch, Route, Redirect, useLocation } from 'react-router-dom';
 import { Register } from './layouts/LoginAndRegister/Register';
 import { Tasks } from './layouts/Tasks/Tasks';
+import { Task } from './layouts/Tasks/Task';
 import ProtectedRoute from './auth/ProtectedRoute';
 import { AuthProvider } from './auth/AuthContext';
 
@@ -39,6 +40,7 @@ export const App = () => {
           </Route>
 
           <ProtectedRoute path='/tasks' component={Tasks}/>
+          <ProtectedRoute path='/task' component={Task}/>
 
         </Switch>
       </div>

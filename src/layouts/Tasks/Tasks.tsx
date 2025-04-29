@@ -2,8 +2,10 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../auth/AuthContext";
 import TaskModel from "../../models/TaskModel";
+import { useHistory } from "react-router-dom";
 
 export const Tasks = () => {
+  const history = useHistory();
   const [loading, setLoading] = useState(true);
   const { token } = useAuth();
   const [tasks, setTasks] = useState<TaskModel[]>();
@@ -40,6 +42,10 @@ export const Tasks = () => {
     // );
   };
 
+  const handleAddTask = () => {
+    history.push('/task');
+  };
+
   return (
     <div className="container mt-4 d-flex flex-column flex-grow-1">
       <div className="card shadow-sm mb-3">
@@ -52,10 +58,10 @@ export const Tasks = () => {
                 className="form-control me-2"
                 placeholder="Buscar por título o descripción"
               />
-              {/* Botón para agregar tarea */}
+              {/* Add task button */}
               <button
                 className="btn btn-success col-lg-2 col-md-2 col-4"
-                onClick={() => alert("Agregar nueva tarea")}
+                onClick={handleAddTask}
               >
                 Agregar tarea
               </button>
@@ -114,8 +120,8 @@ export const Tasks = () => {
                         <span className="badge bg-warning">Pendiente</span>
                       )}
                     </td>
-                    <td>{task.startDate.substring(0,10)}</td>
-                    <td>{task.endDate.substring(0,10)}</td>
+                    <td>{task.startDate ? task.startDate.substring(0,10) : ''}</td>
+                    <td>{task.endDate ? task.endDate.substring(0,10) : ''}</td>
                     <td>
                       {!task.isDone ? (
                         <button
@@ -139,27 +145,13 @@ export const Tasks = () => {
                     </td>
                     <td className="d-flex flex-row">
                       <button
-                        className="btn btn-info badge p-2 mx-1"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Más Información"
-                      >
-                        <i className="fas fa-eye mx-1"></i>
-                      </button>
-                      <button
                         className="btn btn-primary badge p-2 mx-1"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Editar Tarea"
                       >
                         <i className="fas fa-pencil mx-1"></i>
-                        <span>Editar</span>
+                        <span>Ver/Editar</span>
                       </button>
                       <button
                         className="btn btn-danger badge p-2 mx-1"
-                        data-toggle="tooltip"
-                        data-placement="top"
-                        title="Eliminar Tarea"
                       >
                         <i className="fas fa-ban mx-1"></i>
                         <span>Eliminar</span>
