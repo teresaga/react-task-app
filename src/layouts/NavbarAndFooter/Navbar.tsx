@@ -9,7 +9,7 @@ export const Navbar = () => {
 
   const logoutUser = () => {
     logout();
-    history.push("/home");
+    history.push('/home');
   }
 
   return (

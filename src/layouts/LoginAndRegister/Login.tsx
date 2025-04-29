@@ -1,8 +1,8 @@
-import axios from "axios";
+import axios from 'axios';
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
-import LoginModel from "../../models/LoginModel";
-import { useAuth } from "../../auth/AuthContext";
+import LoginModel from '../../models/LoginModel';
+import { useAuth } from '../../auth/AuthContext';
 
 export const Login = () => {
 
@@ -60,8 +60,8 @@ export const Login = () => {
                     <input
                         type='email'
                         className='form-control'
-                        id="email"
-                        name="email"
+                        id='email'
+                        name='email'
                         placeholder='Ingresa tu correo electrónico'
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
@@ -91,7 +91,7 @@ export const Login = () => {
                 </div>
 
                 {error && (
-                    <div className="alert alert-danger" role="alert">
+                    <div className='alert alert-danger' role='alert'>
                         {error}
                     </div>
                 )}

@@ -1,6 +1,6 @@
-import axios from "axios";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import axios from 'axios';
+import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 export const Register = () => {
 
@@ -51,27 +51,27 @@ export const Register = () => {
   }
 
   return (
-    <div className="d-flex justify-content-center align-items-center flex-column flex-grow-1 bg-light">
+    <div className='d-flex justify-content-center align-items-center flex-column flex-grow-1 bg-light'>
       <div
-        className="card shadow p-4"
-        style={{ width: "22rem", borderRadius: "1rem" }}
+        className='card shadow p-4'
+        style={{ width: '22rem', borderRadius: '1rem' }}
       >
-        <h2 className="text-center mb-4">Registro de usuario</h2>
+        <h2 className='text-center mb-4'>Registro de usuario</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="email" className="form-label">
+          <div className='mb-3'>
+            <label htmlFor='email' className='form-label'>
               Correo electrónico
             </label>
-            <div className="input-group">
-              <span className="input-group-text">
-                <i className="fas fa-envelope"></i>
+            <div className='input-group'>
+              <span className='input-group-text'>
+                <i className='fas fa-envelope'></i>
               </span>
               <input
-                type="email"
-                className="form-control"
-                id="email"
-                name="email"
-                placeholder="Ingresa tu correo electrónico"
+                type='email'
+                className='form-control'
+                id='email'
+                name='email'
+                placeholder='Ingresa tu correo electrónico'
                 value={formData.email}
                 onChange={handleChange}
                 required
@@ -79,20 +79,20 @@ export const Register = () => {
             </div>
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="password" className="form-label">
+          <div className='mb-3'>
+            <label htmlFor='password' className='form-label'>
               Contraseña
             </label>
-            <div className="input-group">
-              <span className="input-group-text">
-                <i className="fas fa-lock"></i>
+            <div className='input-group'>
+              <span className='input-group-text'>
+                <i className='fas fa-lock'></i>
               </span>
               <input
-                type="password"
-                className="form-control"
-                id="password"
-                name="password"
-                placeholder="Ingresar contraseña"
+                type='password'
+                className='form-control'
+                id='password'
+                name='password'
+                placeholder='Ingresar contraseña'
                 value={formData.password}
                 onChange={handleChange}
                 required
@@ -100,20 +100,20 @@ export const Register = () => {
             </div>
           </div>
 
-          <div className="mb-3">
-            <label htmlFor="confirmPassword" className="form-label">
+          <div className='mb-3'>
+            <label htmlFor='confirmPassword' className='form-label'>
               Confirmar contraseña
             </label>
-            <div className="input-group">
-              <span className="input-group-text">
-                <i className="fas fa-lock"></i>
+            <div className='input-group'>
+              <span className='input-group-text'>
+                <i className='fas fa-lock'></i>
               </span>
               <input
-                type="password"
-                className="form-control"
-                id="confirmPassword"
-                name="confirmPassword"
-                placeholder="Confirmar contraseña"
+                type='password'
+                className='form-control'
+                id='confirmPassword'
+                name='confirmPassword'
+                placeholder='Confirmar contraseña'
                 value={formData.confirmPassword}
                 onChange={handleChange}
                 required
@@ -122,26 +122,26 @@ export const Register = () => {
           </div>
 
           {error && (
-              <div className="alert alert-danger" role="alert">
+              <div className='alert alert-danger' role='alert'>
                   {error}
               </div>
             )}
 
           {message && (
-              <div className="alert alert-success" role="alert">
+              <div className='alert alert-success' role='alert'>
                   {message}
               </div>
             )}
 
-          <button type="submit" className="btn btn-primary w-100">
+          <button type='submit' className='btn btn-primary w-100'>
             Registrarse
           </button>
         </form>
 
-        <div className="mt-3 text-center">
+        <div className='mt-3 text-center'>
           <p>
             <span>¿Ya tienes cuenta? </span>
-            <Link to="/login" className="text-decoration-none">
+            <Link to='/login' className='text-decoration-none'>
               Inicia sesión aquí
             </Link>
           </p>
