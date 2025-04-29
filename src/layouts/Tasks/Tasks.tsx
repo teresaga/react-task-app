@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useState } from "react";
 import { useAuth } from "../../auth/AuthContext";
 import TaskModel from "../../models/TaskModel";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export const Tasks = () => {
   const history = useHistory();
@@ -44,6 +44,10 @@ export const Tasks = () => {
 
   const handleAddTask = () => {
     history.push('/task');
+  };
+
+  const handleEdit = (taskId: string) => {
+    history.push(`/task/${taskId}`);
   };
 
   return (
@@ -144,15 +148,11 @@ export const Tasks = () => {
                       )}
                     </td>
                     <td className="d-flex flex-row">
-                      <button
-                        className="btn btn-primary badge p-2 mx-1"
-                      >
+                      <button onClick={() => task.id !== undefined && handleEdit(String(task.id))} className="btn btn-primary badge p-2 mx-1">
                         <i className="fas fa-pencil mx-1"></i>
                         <span>Ver/Editar</span>
                       </button>
-                      <button
-                        className="btn btn-danger badge p-2 mx-1"
-                      >
+                      <button className="btn btn-danger badge p-2 mx-1">
                         <i className="fas fa-ban mx-1"></i>
                         <span>Eliminar</span>
                       </button>

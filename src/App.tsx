@@ -40,7 +40,8 @@ export const App = () => {
           </Route>
 
           <ProtectedRoute path='/tasks' component={Tasks}/>
-          <ProtectedRoute path='/task' component={Task}/>
+          <ProtectedRoute exact path='/task' component={Task}/>
+          <ProtectedRoute path="/task/:id" component={Task} />
 
         </Switch>
       </div>
