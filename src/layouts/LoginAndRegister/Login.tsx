@@ -2,6 +2,7 @@ import axios from "axios";
 import { useState } from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import LoginModel from "../../models/LoginModel";
+import { useAuth } from "../../auth/AuthContext";
 
 export const Login = () => {
 
@@ -9,6 +10,8 @@ export const Login = () => {
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
     const history = useHistory();
+
+    const { login } = useAuth();
 
     const handleLogin = async (e: any) => {
         e.preventDefault()
@@ -22,6 +25,7 @@ export const Login = () => {
             const response = await axios.post(`${apiUrl}/api/auth/login`, loginData);
 
             if (response.status === 200) {
+                login(response.data.token);
                 history.push('/tasks');
             } else {
                 const errorText = response.data;
