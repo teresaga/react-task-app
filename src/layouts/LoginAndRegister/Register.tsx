@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 export const Register = () => {
 
   const [formData, setFormData] = useState({
-    name: '',
     email: '',
     password: '',
     confirmPassword: ''
@@ -59,27 +58,6 @@ export const Register = () => {
       >
         <h2 className="text-center mb-4">Registro de usuario</h2>
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
-            <label htmlFor="name" className="form-label">
-              Nombre
-            </label>
-            <div className="input-group">
-              <span className="input-group-text">
-                <i className="fas fa-user"></i>
-              </span>
-              <input
-                type="text"
-                className="form-control"
-                id="name"
-                name="name"
-                placeholder="Ingresa tu nombre"
-                value={formData.name}
-                onChange={handleChange}
-                required
-              />
-            </div>
-          </div>
-
           <div className="mb-3">
             <label htmlFor="email" className="form-label">
               Correo electrónico
