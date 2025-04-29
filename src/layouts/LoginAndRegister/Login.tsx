@@ -10,18 +10,19 @@ export const Login = () => {
                 <h2 className='text-center mb-4'>Iniciar sesión</h2>
                 <form>
                 <div className='mb-3'>
-                    <label htmlFor='username' className='form-label'>
-                    Nombre de usuario
+                    <label htmlFor='email' className='form-label'>
+                    Correo electrónico
                     </label>
                     <div className='input-group'>
                     <span className='input-group-text'>
                         <i className='fas fa-user'></i> {/* Icono de usuario */}
                     </span>
                     <input
-                        type='text'
+                        type='email'
                         className='form-control'
-                        id='username'
-                        placeholder='Ingresa tu nombre de usuario'
+                        id="email"
+                        name="email"
+                        placeholder='Ingresa tu correo electrónico'
                     />
                     </div>
                 </div>
