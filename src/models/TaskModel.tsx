@@ -2,18 +2,18 @@ class TaskModel {
     id: number;
     title: string;
     description: string;
-    is_done: boolean;
-    start_date: Date;
-    end_date: Date;
+    isDone: boolean;
+    startDate: string;
+    endDate: string;
 
-    constructor(id: number, title: string, description: string, is_done: boolean, 
-        start_date: Date, end_date: Date, user_id: string) {
+    constructor(id: number, title: string, description: string, isDone: boolean, 
+        startDate: string, endDate: string) {
             this.id = id;
             this.title = title;
             this.description = description;
-            this.is_done = is_done;
-            this.start_date = start_date;
-            this.end_date = end_date;
+            this.isDone = isDone;
+            this.startDate = startDate;
+            this.endDate = endDate;
     }
 }
 
