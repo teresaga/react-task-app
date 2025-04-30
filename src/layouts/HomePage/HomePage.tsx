@@ -24,7 +24,7 @@ export const HomePage = () => {
           <p className='col-md-8 fs-4'>¿Quieres empezar ahora?</p>
           <Link
             type='button'
-            className='btn main-color btn-lg text-white'
+            className='btn btn-primary btn-lg text-white'
             to='/register'
           >
             Regístrate
