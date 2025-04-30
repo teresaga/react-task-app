@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import { useAuth } from "../../auth/AuthContext";
 import TaskModel from "../../models/TaskModel";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export const Tasks = () => {
   const history = useHistory();
@@ -10,37 +11,32 @@ export const Tasks = () => {
   const { token } = useAuth();
   const [tasks, setTasks] = useState<TaskModel[]>();
 
+  const fetchTasks = async () => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL;
+      const response = await axios.get(`${apiUrl}/api/tasks`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      console.log(response.data);
+      setTasks(response.data.map((task: any) => ({
+        ...task,
+        isDone: task.done, // normalizas el campo
+      })));
+      setLoading(false);
+    } catch (error) {
+      console.error("Error al cargar tareas:", error);
+    }
+  };
+
   useEffect(() => {
     if (token) {
-      const apiUrl = process.env.REACT_APP_API_URL;
-      axios
-        .get(`${apiUrl}/api/tasks`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-        .then((response) => {
-          setLoading(false);
-          setTasks(response.data);
-        })
-        .catch((error) => {
-          console.error("Error fetching profile:", error);
-        });
+      fetchTasks();
     }
   }, [token]);
 
   const [isSortedByCompleted, setIsSortedByCompleted] = useState(false);
-
-  const handleToggleComplete = (taskId: number) => {
-    // Aquí es donde cambias el estado de la tarea
-    // setTasks((prevTasks) =>
-    //   prevTasks.map((task) =>
-    //     task.id === taskId
-    //       ? { ...task, is_done: !task.is_done } // Cambia el estado de completada
-    //       : task
-    //   )
-    // );
-  };
 
   const handleAddTask = () => {
     history.push('/task');
@@ -48,6 +44,49 @@ export const Tasks = () => {
 
   const handleEdit = (taskId: string) => {
     history.push(`/task/${taskId}`);
+  };
+
+  const handleChangeStatus = async (id: string) => {
+    try {
+      const apiUrl = process.env.REACT_APP_API_URL;
+      const respone = await axios.put(
+        `${apiUrl}/api/tasks/change-status/${id}`,
+        {}, 
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      console.log(respone);
+      fetchTasks(); 
+    } catch (error) {
+      Swal.fire("Error", "Hubo un problema al cambiar estado de la tarea.", "error");
+    }
+  };
+
+  const handleDelete = async (id: string) => {
+    const result = await Swal.fire({
+      title: "¿Estás seguro?",
+      text: "Esta acción no se puede deshacer",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sí, eliminar",
+      cancelButtonText: "Cancelar",
+    });
+  
+    if (result.isConfirmed) {
+      try {
+        const apiUrl = process.env.REACT_APP_API_URL;
+        await axios.delete(`${apiUrl}/api/tasks/${id}`, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        Swal.fire("Eliminado", "La tarea fue eliminada.", "success");
+        fetchTasks();
+      } catch (error) {
+        Swal.fire("Error", "Hubo un problema al eliminar la tarea.", "error");
+      }
+    }
   };
 
   return (
@@ -133,26 +172,30 @@ export const Tasks = () => {
                           data-toggle="tooltip"
                           data-placement="top"
                           title="Marcar Completa"
+                          onClick={() => task.id !== undefined && handleChangeStatus(String(task.id))}
                         >
                           <i className="fas fa-check mx-1"></i>
                         </button>
                       ) : (
                         <button
-                          className="btn btn-outline-warning text-dark badge p-2 mx-1"
+                          className="btn btn-warning badge p-2 mx-1"
                           data-toggle="tooltip"
                           data-placement="top"
                           title="Marcar Pendiente"
+                          onClick={() => task.id !== undefined && handleChangeStatus(String(task.id))}
                         >
                           <i className="fas fa-undo mx-1"></i>
                         </button>
                       )}
                     </td>
                     <td className="d-flex flex-row">
-                      <button onClick={() => task.id !== undefined && handleEdit(String(task.id))} className="btn btn-primary badge p-2 mx-1">
+                      <button 
+                        onClick={() => task.id !== undefined && handleEdit(String(task.id))} 
+                        className="btn btn-info badge p-2 mx-1">
                         <i className="fas fa-pencil mx-1"></i>
                         <span>Ver/Editar</span>
                       </button>
-                      <button className="btn btn-danger badge p-2 mx-1">
+                      <button onClick={() => task.id !== undefined && handleDelete(String(task.id))} className="btn btn-danger badge p-2 mx-1">
                         <i className="fas fa-ban mx-1"></i>
                         <span>Eliminar</span>
                       </button>
