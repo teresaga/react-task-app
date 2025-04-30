@@ -1,9 +1,9 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
-import Swal from "sweetalert2";
-import { useAuth } from "../../auth/AuthContext";
-import TaskModel from "../../models/TaskModel";
-import { useHistory } from "react-router-dom";
+import axios from 'axios';
+import { useEffect, useState } from 'react';
+import Swal from 'sweetalert2';
+import { useAuth } from '../../auth/AuthContext';
+import TaskModel from '../../models/TaskModel';
+import { useHistory } from 'react-router-dom';
 
 export const Tasks = () => {
   const history = useHistory();
@@ -11,7 +11,7 @@ export const Tasks = () => {
   const { token } = useAuth();
   const [tasks, setTasks] = useState<TaskModel[]>();
 
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
 
   // Filter tasks
@@ -40,7 +40,6 @@ export const Tasks = () => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
       setTasks(
         response.data.map((task: any) => ({
           ...task,
@@ -49,7 +48,7 @@ export const Tasks = () => {
       );
       setLoading(false);
     } catch (error) {
-      console.error("Error al cargar tareas:", error);
+      console.error('Error al cargar tareas:', error);
     }
   };
 
@@ -60,7 +59,7 @@ export const Tasks = () => {
   }, [token]);
 
   const handleAddTask = () => {
-    history.push("/task");
+    history.push('/task');
   };
 
   const handleEdit = (taskId: string) => {
@@ -77,27 +76,26 @@ export const Tasks = () => {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log(respone);
       fetchTasks();
     } catch (error) {
       Swal.fire(
-        "Error",
-        "Hubo un problema al cambiar estado de la tarea.",
-        "error"
+        'Error',
+        'Hubo un problema al cambiar estado de la tarea.',
+        'error'
       );
     }
   };
 
   const handleDelete = async (id: string) => {
     const result = await Swal.fire({
-      title: "¿Estás seguro?",
-      text: "Esta acción no se puede deshacer",
-      icon: "warning",
+      title: '¿Estás seguro?',
+      text: 'Esta acción no se puede deshacer',
+      icon: 'warning',
       showCancelButton: true,
-      confirmButtonColor: "#d33",
-      cancelButtonColor: "#3085d6",
-      confirmButtonText: "Sí, eliminar",
-      cancelButtonText: "Cancelar",
+      confirmButtonColor: '#d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: 'Sí, eliminar',
+      cancelButtonText: 'Cancelar',
     });
 
     if (result.isConfirmed) {
@@ -106,25 +104,25 @@ export const Tasks = () => {
         await axios.delete(`${apiUrl}/api/tasks/${id}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        Swal.fire("Eliminado", "La tarea fue eliminada.", "success");
+        Swal.fire('Eliminado', 'La tarea fue eliminada.', 'success');
         fetchTasks();
       } catch (error) {
-        Swal.fire("Error", "Hubo un problema al eliminar la tarea.", "error");
+        Swal.fire('Error', 'Hubo un problema al eliminar la tarea.', 'error');
       }
     }
   };
 
   return (
-    <div className="container mt-4 d-flex flex-column flex-grow-1">
-      <div className="card shadow-sm mb-3">
-        <div className="card-body">
+    <div className='container mt-4 d-flex flex-column flex-grow-1'>
+      <div className='card shadow-sm mb-3'>
+        <div className='card-body'>
           {/* Search */}
-          <div className="d-flex justify-content-between mb-3">
-            <div className="d-flex flex-row flex-grow-1">
+          <div className='d-flex justify-content-between mb-3'>
+            <div className='d-flex flex-row flex-grow-1'>
               <input
-                type="text"
-                className="form-control me-2"
-                placeholder="Buscar por título o descripción"
+                type='text'
+                className='form-control me-2'
+                placeholder='Buscar por título o descripción'
                 value={searchTerm}
                 onChange={(e) => {
                   setSearchTerm(e.target.value);
@@ -133,7 +131,7 @@ export const Tasks = () => {
               />
               {/* Add task button */}
               <button
-                className="btn btn-success col-lg-2 col-md-2 col-4"
+                className='btn btn-success col-lg-2 col-md-2 col-4'
                 onClick={handleAddTask}
               >
                 Agregar tarea
@@ -142,8 +140,8 @@ export const Tasks = () => {
           </div>
 
           {/* Tasks List */}
-          <div className="table-scroll">
-            <table className="table table-striped">
+          <div className='table-scroll'>
+            <table className='table table-striped'>
               <thead>
                 <tr>
                   <th>#</th>
@@ -152,7 +150,7 @@ export const Tasks = () => {
                   <th>Estado</th>
                   <th>Fecha Inicio</th>
                   <th>Fecha límite</th>
-                  <th className="w-6">Cambiar estado </th>
+                  <th className='w-6'>Cambiar estado </th>
                   <th>Acciones</th>
                 </tr>
               </thead>
@@ -161,13 +159,13 @@ export const Tasks = () => {
                   <tr>
                     <td
                       colSpan={8}
-                      style={{ textAlign: "center", padding: "20px" }}
+                      style={{ textAlign: 'center', padding: '20px' }}
                     >
                       <div
-                        className="spinner-border text-primary"
-                        role="status"
+                        className='spinner-border text-primary'
+                        role='status'
                       >
-                        <span className="sr-only">Loading...</span>
+                        <span className='sr-only'>Loading...</span>
                       </div>
                     </td>
                   </tr>
@@ -176,64 +174,64 @@ export const Tasks = () => {
                   <tr key={task.id}>
                     <td>{index + 1}</td>
                     <td>{task.title}</td>
-                    <td className="description-cell">{task.description}</td>
+                    <td className='description-cell'>{task.description}</td>
                     <td>
                       {task.isDone ? (
-                        <span className="badge bg-success">Completada</span>
+                        <span className='badge bg-success'>Completada</span>
                       ) : (
-                        <span className="badge bg-warning">Pendiente</span>
+                        <span className='badge bg-warning'>Pendiente</span>
                       )}
                     </td>
                     <td>
-                      {task.startDate ? task.startDate.substring(0, 10) : ""}
+                      {task.startDate ? task.startDate.substring(0, 10) : ''}
                     </td>
-                    <td>{task.endDate ? task.endDate.substring(0, 10) : ""}</td>
+                    <td>{task.endDate ? task.endDate.substring(0, 10) : ''}</td>
                     <td>
                       {!task.isDone ? (
                         <button
-                          className="btn btn-success badge p-2 mx-1"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          title="Marcar Completa"
+                          className='btn btn-success badge p-2 mx-1'
+                          data-toggle='tooltip'
+                          data-placement='top'
+                          title='Marcar Completa'
                           onClick={() =>
                             task.id !== undefined &&
                             handleChangeStatus(String(task.id))
                           }
                         >
-                          <i className="fas fa-check mx-1"></i>
+                          <i className='fas fa-check mx-1'></i>
                         </button>
                       ) : (
                         <button
-                          className="btn btn-warning badge p-2 mx-1"
-                          data-toggle="tooltip"
-                          data-placement="top"
-                          title="Marcar Pendiente"
+                          className='btn btn-warning badge p-2 mx-1'
+                          data-toggle='tooltip'
+                          data-placement='top'
+                          title='Marcar Pendiente'
                           onClick={() =>
                             task.id !== undefined &&
                             handleChangeStatus(String(task.id))
                           }
                         >
-                          <i className="fas fa-undo mx-1"></i>
+                          <i className='fas fa-undo mx-1'></i>
                         </button>
                       )}
                     </td>
-                    <td className="d-flex flex-row">
+                    <td className='d-flex flex-row'>
                       <button
                         onClick={() =>
                           task.id !== undefined && handleEdit(String(task.id))
                         }
-                        className="btn btn-info badge p-2 mx-1"
+                        className='btn btn-info badge p-2 mx-1'
                       >
-                        <i className="fas fa-pencil mx-1"></i>
+                        <i className='fas fa-pencil mx-1'></i>
                         <span>Ver/Editar</span>
                       </button>
                       <button
                         onClick={() =>
                           task.id !== undefined && handleDelete(String(task.id))
                         }
-                        className="btn btn-danger badge p-2 mx-1"
+                        className='btn btn-danger badge p-2 mx-1'
                       >
-                        <i className="fas fa-ban mx-1"></i>
+                        <i className='fas fa-ban mx-1'></i>
                         <span>Eliminar</span>
                       </button>
                     </td>
@@ -244,18 +242,18 @@ export const Tasks = () => {
           </div>
 
           {/* Pagination buttons */}
-          <div className="d-flex justify-content-center mt-3">
+          <div className='d-flex justify-content-center mt-3'>
               <nav>
-                <ul className="pagination">
+                <ul className='pagination'>
                   {[...Array(totalPages)].map((_, i) => (
                     <li
                       key={i}
                       className={`page-item ${
-                        currentPage === i + 1 ? "active" : ""
+                        currentPage === i + 1 ? 'active' : ''
                       }`}
                     >
                       <button
-                        className="page-link"
+                        className='page-link'
                         onClick={() => setCurrentPage(i + 1)}
                       >
                         {i + 1}

@@ -1,6 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
+import { useAuth } from '../../auth/AuthContext';
+import { useEffect } from 'react';
 
 export const HomePage = () => {
+  
+    const history = useHistory();
+      const { token } = useAuth(); 
+    
+      useEffect(() => {
+        if (token) {
+          history.push('/tasks');
+        }
+      }, [token, history]);
+      
   return (
     <div title='Foto de Kier in Sight Archives en unsplash.com'>
       <div

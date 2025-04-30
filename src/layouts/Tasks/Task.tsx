@@ -1,21 +1,21 @@
-import { useEffect, useState } from "react";
-import TaskModel from "../../models/TaskModel";
-import { useHistory, useParams } from "react-router-dom";
-import axios from "axios";
-import { useAuth } from "../../auth/AuthContext";
+import { useEffect, useState } from 'react';
+import TaskModel from '../../models/TaskModel';
+import { useHistory, useParams } from 'react-router-dom';
+import axios from 'axios';
+import { useAuth } from '../../auth/AuthContext';
 
 export const Task = () => {
   const { token } = useAuth();
   const history = useHistory();
   const { id } = useParams<{ id?: string }>();
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState("");
+  const [message, setMessage] = useState('');
+  const [error, setError] = useState('');
   const [formTitle, setFormTitle] = useState(false);
 
-  const today = new Date().toISOString().split("T")[0];
+  const today = new Date().toISOString().split('T')[0];
   const [task, setTask] = useState<TaskModel>({
-    title: "",
-    description: "",
+    title: '',
+    description: '',
     startDate: today,
     endDate: today,
   });
@@ -37,21 +37,21 @@ export const Task = () => {
             setTask({
             title: response.data.title,
             description: response.data.description,
-            startDate: new Date(response.data.startDate).toISOString().split("T")[0] || today,
-            endDate: new Date(response.data.endDate).toISOString().split("T")[0] || today,
+            startDate: new Date(response.data.startDate).toISOString().split('T')[0] || today,
+            endDate: new Date(response.data.endDate).toISOString().split('T')[0] || today,
             }); 
         } catch (err) {
-          setError("Error al cargar la tarea.");
+          setError('Error al cargar la tarea.');
         }
       };
       fetchTask();
     } else {
       setFormTitle(false);
       // If no id exists, then set default dates and an empty task
-      const today = new Date().toISOString().split("T")[0];
+      const today = new Date().toISOString().split('T')[0];
       setTask({
-        title: "",
-        description: "",
+        title: '',
+        description: '',
         startDate: today,
         endDate: today,
       });
@@ -67,12 +67,12 @@ export const Task = () => {
     e.preventDefault();
 
     if (task.endDate < task.startDate) {
-      setMessage("");
-      setError("La fecha de límite no puede ser menor que la fecha de inicio.");
+      setMessage('');
+      setError('La fecha de límite no puede ser menor que la fecha de inicio.');
       return;
     }
-    setError("");
-    setMessage("");
+    setError('');
+    setMessage('');
 
     try {
       const apiUrl = process.env.REACT_APP_API_URL;
@@ -85,7 +85,7 @@ export const Task = () => {
           },
         });
         if (response.status === 200) {
-          setMessage("Tarea actualizada con éxito.");
+          setMessage('Tarea actualizada con éxito.');
         } else {
             const errorText = response.data;
             setError(errorText);
@@ -98,10 +98,10 @@ export const Task = () => {
           },
         });
         if (response.status === 200) {
-          setMessage("Tarea creada con éxito.");
+          setMessage('Tarea creada con éxito.');
           setTask({
-            title: "",
-            description: "",
+            title: '',
+            description: '',
             startDate: today,
             endDate: today,
           });
@@ -111,43 +111,43 @@ export const Task = () => {
           }
       }
     } catch (err: any) {
-      setMessage("");
-      setError("Ha ocurrido un error durante el registro.");
+      setMessage('');
+      setError('Ha ocurrido un error durante el registro.');
     }
   };
   return (
-    <div className="d-flex justify-content-center align-items-center flex-column flex-grow-1 bg-light">
+    <div className='d-flex justify-content-center align-items-center flex-column flex-grow-1 bg-light'>
       <div
-        className="card shadow p-4"
-        style={{ width: "30rem", borderRadius: "1rem" }}
+        className='card shadow p-4'
+        style={{ width: '30rem', borderRadius: '1rem' }}
       >
-        <h2 className="text-center mb-4">
-          {formTitle ? "Editar tarea" : "Agregar tarea"}
+        <h2 className='text-center mb-4'>
+          {formTitle ? 'Editar tarea' : 'Agregar tarea'}
         </h2>
         <form onSubmit={handleSubmit}>
-          <div className="form-group mb-3">
-            <label htmlFor="title" className="form-label">
+          <div className='form-group mb-3'>
+            <label htmlFor='title' className='form-label'>
               Titulo
             </label>
             <input
-              type="text"
-              className="form-control"
-              id="title"
-              name="title"
+              type='text'
+              className='form-control'
+              id='title'
+              name='title'
               value={task.title}
               onChange={handleChange}
               required
             />
           </div>
 
-          <div className="form-group mb-3">
-            <label htmlFor="description" className="form-label">
+          <div className='form-group mb-3'>
+            <label htmlFor='description' className='form-label'>
               Descripción
             </label>
             <textarea
-              className="form-control"
-              id="description"
-              name="description"
+              className='form-control'
+              id='description'
+              name='description'
               rows={4}
               value={task.description}
               onChange={handleChange}
@@ -155,30 +155,30 @@ export const Task = () => {
             />
           </div>
 
-          <div className="form-group mb-3">
-            <label htmlFor="startDate" className="form-label">
+          <div className='form-group mb-3'>
+            <label htmlFor='startDate' className='form-label'>
               Fecha de inicio
             </label>
             <input
-              className="form-control"
-              type="date"
-              id="startDate"
-              name="startDate"
+              className='form-control'
+              type='date'
+              id='startDate'
+              name='startDate'
               value={task.startDate}
               onChange={handleChange}
               required
             />
           </div>
 
-          <div className="form-group mb-3">
-            <label htmlFor="endDate" className="form-label">
+          <div className='form-group mb-3'>
+            <label htmlFor='endDate' className='form-label'>
               Fecha límite
             </label>
             <input
-              className="form-control"
-              type="date"
-              id="endDate"
-              name="endDate"
+              className='form-control'
+              type='date'
+              id='endDate'
+              name='endDate'
               value={task.endDate}
               onChange={handleChange}
               required
@@ -186,24 +186,24 @@ export const Task = () => {
           </div>
 
           {error && (
-            <div className="alert alert-danger" role="alert">
+            <div className='alert alert-danger' role='alert'>
               {error}
             </div>
           )}
           {message && (
-            <div className="alert alert-success" role="alert">
+            <div className='alert alert-success' role='alert'>
               {message}
             </div>
           )}
 
-          <div className="d-flex justify-content-between">
-            <button type="submit" className="btn btn-primary">
+          <div className='d-flex justify-content-between'>
+            <button type='submit' className='btn btn-primary'>
               Guardar tarea
             </button>
             <button
-              type="button"
-              className="btn btn-secondary"
-              onClick={() => history.push("/tasks")}
+              type='button'
+              className='btn btn-secondary'
+              onClick={() => history.push('/tasks')}
             >
               Regresar al inicio
             </button>

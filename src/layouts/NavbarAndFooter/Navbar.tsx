@@ -27,11 +27,7 @@ export const Navbar = () => {
           <span className='navbar-toggler-icon'></span>
         </button>
         <div className='collapse navbar-collapse' id='navbarNavDropdown'>
-          <ul className='navbar-nav'>
-            <li className='nav-item'>
-              <NavLink className='nav-link' to='/tasks'> Home </NavLink>
-            </li>
-          </ul>
+          
           <ul className='navbar-nav ms-auto'>
             {!token && (
             <>

@@ -96,22 +96,6 @@ export const Login = () => {
                     </div>
                 )}
 
-                <div className='d-flex justify-content-between mb-3'>
-                    <div className='form-check'>
-                    <input
-                        type='checkbox'
-                        className='form-check-input'
-                        id='rememberMe'
-                    />
-                    <label className='form-check-label' htmlFor='rememberMe'>
-                        Recuérdame
-                    </label>
-                    </div>
-                    <a href='#' className='text-decoration-none'>
-                    ¿Olvidaste tu contraseña?
-                    </a>
-                </div>
-
                 <button type='submit' className='btn btn-primary w-100'>
                     Iniciar sesión
                 </button>
