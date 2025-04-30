@@ -11,6 +11,27 @@ export const Tasks = () => {
   const { token } = useAuth();
   const [tasks, setTasks] = useState<TaskModel[]>();
 
+  const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+
+  // Filter tasks
+  const filteredTasks = tasks?.filter((task) => {
+    const term = searchTerm.toLowerCase();
+    return (
+      task.title.toLowerCase().includes(term) ||
+      task.description.toLowerCase().includes(term)
+    );
+  });
+
+  // Pagination 
+  const tasksPerPage = 10;
+  const indexOfLastTask = currentPage * tasksPerPage;
+  const indexOfFirstTask = indexOfLastTask - tasksPerPage;
+
+  // GET filtered tasks
+  const currentTasks = filteredTasks?.slice(indexOfFirstTask, indexOfLastTask);
+  const totalPages = Math.ceil((filteredTasks?.length || 0) / tasksPerPage);
+
   const fetchTasks = async () => {
     try {
       const apiUrl = process.env.REACT_APP_API_URL;
@@ -20,10 +41,12 @@ export const Tasks = () => {
         },
       });
       console.log(response.data);
-      setTasks(response.data.map((task: any) => ({
-        ...task,
-        isDone: task.done, // normalizas el campo
-      })));
+      setTasks(
+        response.data.map((task: any) => ({
+          ...task,
+          isDone: task.done, // normalizas el campo
+        }))
+      );
       setLoading(false);
     } catch (error) {
       console.error("Error al cargar tareas:", error);
@@ -36,10 +59,8 @@ export const Tasks = () => {
     }
   }, [token]);
 
-  const [isSortedByCompleted, setIsSortedByCompleted] = useState(false);
-
   const handleAddTask = () => {
-    history.push('/task');
+    history.push("/task");
   };
 
   const handleEdit = (taskId: string) => {
@@ -51,15 +72,19 @@ export const Tasks = () => {
       const apiUrl = process.env.REACT_APP_API_URL;
       const respone = await axios.put(
         `${apiUrl}/api/tasks/change-status/${id}`,
-        {}, 
+        {},
         {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
       console.log(respone);
-      fetchTasks(); 
+      fetchTasks();
     } catch (error) {
-      Swal.fire("Error", "Hubo un problema al cambiar estado de la tarea.", "error");
+      Swal.fire(
+        "Error",
+        "Hubo un problema al cambiar estado de la tarea.",
+        "error"
+      );
     }
   };
 
@@ -74,7 +99,7 @@ export const Tasks = () => {
       confirmButtonText: "Sí, eliminar",
       cancelButtonText: "Cancelar",
     });
-  
+
     if (result.isConfirmed) {
       try {
         const apiUrl = process.env.REACT_APP_API_URL;
@@ -100,6 +125,11 @@ export const Tasks = () => {
                 type="text"
                 className="form-control me-2"
                 placeholder="Buscar por título o descripción"
+                value={searchTerm}
+                onChange={(e) => {
+                  setSearchTerm(e.target.value);
+                  setCurrentPage(1);
+                }}
               />
               {/* Add task button */}
               <button
@@ -119,21 +149,7 @@ export const Tasks = () => {
                   <th>#</th>
                   <th>Título</th>
                   <th>Descripción</th>
-                  <th
-                    style={{ cursor: "pointer" }}
-                    onClick={() => setIsSortedByCompleted(!isSortedByCompleted)}
-                  >
-                    <span className="d-flex justify-content-between">
-                      <span>Estado </span>
-                      <i
-                        className={`text-primary mx-2 fas ${
-                          isSortedByCompleted
-                            ? "fa-arrow-circle-up"
-                            : "fa-arrow-circle-down"
-                        }`}
-                      ></i>
-                    </span>
-                  </th>
+                  <th>Estado</th>
                   <th>Fecha Inicio</th>
                   <th>Fecha límite</th>
                   <th className="w-6">Cambiar estado </th>
@@ -142,16 +158,21 @@ export const Tasks = () => {
               </thead>
               <tbody>
                 {loading && (
-                <tr>
-                  <td colSpan={8} style={{ textAlign: 'center', padding: '20px' }}>
-                    <div className="spinner-border text-primary" role="status">
-                      <span className="sr-only">Loading...</span>
-                    </div>
-                  </td>
-                </tr>
-
+                  <tr>
+                    <td
+                      colSpan={8}
+                      style={{ textAlign: "center", padding: "20px" }}
+                    >
+                      <div
+                        className="spinner-border text-primary"
+                        role="status"
+                      >
+                        <span className="sr-only">Loading...</span>
+                      </div>
+                    </td>
+                  </tr>
                 )}
-                {tasks?.map((task, index) => (
+                {currentTasks?.map((task, index) => (
                   <tr key={task.id}>
                     <td>{index + 1}</td>
                     <td>{task.title}</td>
@@ -163,8 +184,10 @@ export const Tasks = () => {
                         <span className="badge bg-warning">Pendiente</span>
                       )}
                     </td>
-                    <td>{task.startDate ? task.startDate.substring(0,10) : ''}</td>
-                    <td>{task.endDate ? task.endDate.substring(0,10) : ''}</td>
+                    <td>
+                      {task.startDate ? task.startDate.substring(0, 10) : ""}
+                    </td>
+                    <td>{task.endDate ? task.endDate.substring(0, 10) : ""}</td>
                     <td>
                       {!task.isDone ? (
                         <button
@@ -172,7 +195,10 @@ export const Tasks = () => {
                           data-toggle="tooltip"
                           data-placement="top"
                           title="Marcar Completa"
-                          onClick={() => task.id !== undefined && handleChangeStatus(String(task.id))}
+                          onClick={() =>
+                            task.id !== undefined &&
+                            handleChangeStatus(String(task.id))
+                          }
                         >
                           <i className="fas fa-check mx-1"></i>
                         </button>
@@ -182,20 +208,31 @@ export const Tasks = () => {
                           data-toggle="tooltip"
                           data-placement="top"
                           title="Marcar Pendiente"
-                          onClick={() => task.id !== undefined && handleChangeStatus(String(task.id))}
+                          onClick={() =>
+                            task.id !== undefined &&
+                            handleChangeStatus(String(task.id))
+                          }
                         >
                           <i className="fas fa-undo mx-1"></i>
                         </button>
                       )}
                     </td>
                     <td className="d-flex flex-row">
-                      <button 
-                        onClick={() => task.id !== undefined && handleEdit(String(task.id))} 
-                        className="btn btn-info badge p-2 mx-1">
+                      <button
+                        onClick={() =>
+                          task.id !== undefined && handleEdit(String(task.id))
+                        }
+                        className="btn btn-info badge p-2 mx-1"
+                      >
                         <i className="fas fa-pencil mx-1"></i>
                         <span>Ver/Editar</span>
                       </button>
-                      <button onClick={() => task.id !== undefined && handleDelete(String(task.id))} className="btn btn-danger badge p-2 mx-1">
+                      <button
+                        onClick={() =>
+                          task.id !== undefined && handleDelete(String(task.id))
+                        }
+                        className="btn btn-danger badge p-2 mx-1"
+                      >
                         <i className="fas fa-ban mx-1"></i>
                         <span>Eliminar</span>
                       </button>
@@ -205,6 +242,29 @@ export const Tasks = () => {
               </tbody>
             </table>
           </div>
+
+          {/* Pagination buttons */}
+          <div className="d-flex justify-content-center mt-3">
+              <nav>
+                <ul className="pagination">
+                  {[...Array(totalPages)].map((_, i) => (
+                    <li
+                      key={i}
+                      className={`page-item ${
+                        currentPage === i + 1 ? "active" : ""
+                      }`}
+                    >
+                      <button
+                        className="page-link"
+                        onClick={() => setCurrentPage(i + 1)}
+                      >
+                        {i + 1}
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </nav>
+            </div>
         </div>
       </div>
     </div>

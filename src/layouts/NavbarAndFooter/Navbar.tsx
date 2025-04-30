@@ -29,7 +29,7 @@ export const Navbar = () => {
         <div className='collapse navbar-collapse' id='navbarNavDropdown'>
           <ul className='navbar-nav'>
             <li className='nav-item'>
-              <NavLink className='nav-link' to='/home'> Home </NavLink>
+              <NavLink className='nav-link' to='/tasks'> Home </NavLink>
             </li>
           </ul>
           <ul className='navbar-nav ms-auto'>

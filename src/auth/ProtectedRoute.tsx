@@ -13,7 +13,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ component: Component, .
     <Route
       {...rest}
       render={(props) =>
-        token ? <Component {...props} /> : <Redirect to="/login" />
+        token ? <Component {...props} /> : <Redirect to="/" />
       }
     />
   );
